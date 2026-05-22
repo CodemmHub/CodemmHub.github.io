@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manoj Mathangadeera — Creative Strategist & Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #0e0d0b;
+      --paper: #f4f0e8;
+      --warm: #c8a96e;
+      --accent: #d64f2a;
+      --muted: #6b6560;
+      --rule: rgba(14,13,11,0.12);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      mix-blend-mode: multiply;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9990; opacity: 0.6;
+    }
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; padding: 24px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo .logo-svg { height: 48px; width: auto; display: block; }
+    .nav-logo .logo-dark { display: block; }
+    .nav-logo .logo-light { display: none; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    /* HERO */
+    .hero {
+      min-height: 100vh; padding: 160px 48px 80px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: end;
+      border-bottom: 1px solid var(--rule); position: relative;
+    }
+    .hero-index {
+      position: absolute; top: 160px; right: 48px;
+      font-family: 'DM Mono', monospace; font-size: 10px;
+      letter-spacing: 0.1em; color: var(--muted); writing-mode: vertical-rl;
+    }
+    .hero-left h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(44px, 5.5vw, 88px);
+      font-weight: 300; line-height: 1.05;
+      letter-spacing: -0.01em; color: var(--ink);
+      white-space: nowrap;
+    }
+    .hero-descriptor {
+      margin-top: 32px; font-size: 18px; font-weight: 300;
+      font-style: italic; color: var(--muted); line-height: 1.6; max-width: 420px;
+    }
+    .hero-right { padding-bottom: 8px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+    .tag {
+      font-family: 'DM Mono', monospace; font-size: 9px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid var(--rule); color: var(--muted);
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 16px;
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--ink); padding-bottom: 4px;
+      transition: gap 0.3s ease, color 0.2s;
+    }
+    .hero-cta:hover { gap: 28px; color: var(--accent); border-color: var(--accent); }
+    .hero-location {
+      margin-top: 48px; font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;
+    }
+    /* MARQUEE */
+    .marquee-wrap { overflow: hidden; border-bottom: 1px solid var(--rule); padding: 20px 0; background: var(--ink); }
+    .marquee-track { display: flex; animation: marquee 22s linear infinite; width: max-content; }
+    .marquee-item { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.08em; color: var(--paper); opacity: 0.4; padding: 0 40px; white-space: nowrap; }
+    .marquee-item.accent { color: var(--warm); opacity: 1; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    /* ABOUT */
+    .about { padding: 120px 48px; display: grid; grid-template-columns: 200px 1fr 1fr; gap: 80px; border-bottom: 1px solid var(--rule); }
+    .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); padding-top: 6px; }
+    .about-text h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 300; line-height: 1.2; margin-bottom: 32px; }
+    .about-text h2 em { font-style: italic; color: var(--accent); }
+    .about-text p { font-size: 18px; font-weight: 300; line-height: 1.8; color: var(--muted); margin-bottom: 20px; }
+    .about-stats { display: flex; flex-direction: column; gap: 40px; padding-top: 12px; }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 56px; line-height: 1; color: var(--ink); }
+    .stat-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    /* SERVICES */
+    .services { padding: 120px 48px; border-bottom: 1px solid var(--rule); }
+    .services-header { display: grid; grid-template-columns: 200px 1fr; gap: 80px; margin-bottom: 80px; }
+    .services-title { font-size: clamp(40px, 5vw, 72px); font-weight: 300; line-height: 1.1; }
+    .services-title em { font-style: italic; color: var(--accent); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--rule); }
+    .service-card { padding: 48px 40px; border-right: 1px solid var(--rule); position: relative; overflow: hidden; transition: background 0.3s; }
+    .service-card:last-child { border-right: none; }
+    .service-card:hover { background: var(--ink); }
+    .service-card:hover .service-num, .service-card:hover .service-name, .service-card:hover .service-desc { color: var(--paper); }
+    .service-card:hover .service-arrow { color: var(--accent); }
+    .service-num { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 48px; transition: color 0.3s; }
+    .service-name { font-size: 28px; font-weight: 300; line-height: 1.2; margin-bottom: 20px; transition: color 0.3s; }
+    .service-desc { font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--muted); transition: color 0.3s; }
+    .service-arrow { position: absolute; bottom: 40px; right: 40px; font-size: 24px; color: var(--rule); transition: color 0.3s, transform 0.3s; }
+    .service-card:hover .service-arrow { transform: translate(4px, -4px); }
+    /* WORK */
+    .work { padding: 120px 48px; border-bottom: 1px solid var(--rule); }
+    .work-header { display: grid; grid-template-columns: 200px 1fr auto; gap: 80px; align-items: end; margin-bottom: 80px; }
+    .work-title { font-size: clamp(40px, 5vw, 72px); font-weight: 300; line-height: 1.1; }
+    .work-title em { font-style: italic; color: var(--accent); }
+    .work-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; }
+    .work-link:hover { color: var(--ink); border-color: var(--ink); }
+    .work-list { display: flex; flex-direction: column; }
+    .work-item { display: grid; grid-template-columns: 80px 1fr auto auto; gap: 40px; align-items: center; padding: 32px 0; border-top: 1px solid var(--rule); text-decoration: none; color: var(--ink); transition: padding-left 0.3s ease; }
+    .work-item:hover { padding-left: 20px; }
+    .work-item:hover .work-item-name { color: var(--accent); }
+    .work-num { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--muted); }
+    .work-item-name { font-size: 24px; font-weight: 400; transition: color 0.2s; }
+    .work-item-type { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .work-item-year { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); }
+    /* DESIGN */
+    .design { padding: 120px 48px; border-bottom: 1px solid var(--rule); }
+    .design-header { display: grid; grid-template-columns: 200px 1fr auto; gap: 80px; align-items: end; margin-bottom: 60px; }
+    .design-title { font-size: clamp(40px, 5vw, 72px); font-weight: 300; line-height: 1.1; }
+    .design-title em { font-style: italic; color: var(--accent); }
+    .design-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-left: 280px; }
+    .design-item { aspect-ratio: 1; background: var(--ink); overflow: hidden; position: relative; }
+    .design-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; transition: opacity 0.4s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+    .design-item:hover img { opacity: 1; transform: scale(1.06); }
+    .design-item-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px; background: linear-gradient(transparent, rgba(14,13,11,0.8)); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--paper); opacity: 0; transition: opacity 0.3s; }
+    .design-item:hover .design-item-label { opacity: 1; }
+    /* CONTACT */
+    .contact { padding: 120px 48px 80px; display: grid; grid-template-columns: 200px 1fr; gap: 80px; }
+    .contact-content h2 { font-size: clamp(48px, 7vw, 100px); font-weight: 300; line-height: 1; margin-bottom: 48px; }
+    .contact-content h2 em { font-style: italic; color: var(--accent); }
+    .contact-links { display: flex; flex-direction: column; gap: 20px; }
+    .contact-link { display: flex; align-items: center; gap: 20px; font-size: 20px; font-weight: 300; color: var(--ink); text-decoration: none; transition: gap 0.3s, color 0.2s; }
+    .contact-link:hover { gap: 32px; color: var(--accent); }
+    .contact-link-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); min-width: 80px; }
+    /* FOOTER */
+    footer { border-top: 1px solid var(--rule); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
+    footer span { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+    .footer-logo .logo-svg { height: 36px; width: auto; opacity: 0.35; }
+    .footer-logo .logo-dark { display: block; }
+    .footer-logo .logo-light { display: none; }
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* MOBILE */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .nav-logo .logo-svg { height: 38px; }
+      .hero { grid-template-columns: 1fr; padding: 120px 24px 60px; }
+      .hero-index { display: none; }
+      .hero-left h1 { white-space: normal; font-size: clamp(36px, 8vw, 60px); }
+      .about { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      .services { padding: 80px 24px; }
+      .services-header { grid-template-columns: 1fr; gap: 20px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { border-right: none; border-bottom: 1px solid var(--rule); }
+      .work { padding: 80px 24px; }
+      .work-header { grid-template-columns: 1fr auto; gap: 20px; }
+      .work-item { grid-template-columns: 40px 1fr auto; }
+      .work-item-year { display: none; }
+      .design { padding: 80px 24px; }
+      .design-header { grid-template-columns: 1fr auto; gap: 20px; }
+      .design-grid { grid-template-columns: repeat(2, 1fr); margin-left: 0; }
+      .contact { grid-template-columns: 1fr; padding: 80px 24px; gap: 40px; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+      body { cursor: auto; }
+      .cursor, .cursor-ring { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg class="logo-svg logo-dark" id="uuid-266dec3d-7807-4396-92e9-22ca927018dc" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <rect x="0" y="0" width="1000" height="1000" fill="#0a1e2c"/>
+  <g>
+    <path d="M395.59,681.04c-.47-10.03,3.24-30.07,5.02-40.11,10.72-60.75,35.96-151.84,59.29-208.67,4.51-11.01,9.27-19.65,14.67-30.07,1.76-3.4,6.47-12.06,7.1-15.6,1.32-7.23-2.36-12.33-8.05-13.16-12.64-1.88-27.34,24.14-33.22,33.81-5.74,9.41-57.9,80.39-65.35,90.59-12.43,17.04-23.38,36.42-36.05,52.96,1.64-8.08,6.25-10.4,.63-17.84-9.42-5.69-30.37,31.39-33.46,36.37-26.88,43.38-52.71,86.43-78.58,132.03l-39.27,66.54c-2.34,4.13-4.74,6.88-6.96,10.3-4,6.17-17.01,29.51-18.06,34.78-5.28,26.34,13.96,27.78,22.38,21.56,4.52-3.32,15.3-27.63,18.41-33.56,8.27-15.89,16.23-31.03,24.43-45.72,26.2-46.89,48.53-87.51,76.84-132.96,37.32-59.95,59.12-92.15,98.03-147.17,4.27-6.06,9.83-14.72,14.7-19.73-1.1,5.18-4.74,13.7-6.76,19.61-15.53,45.5-28.54,92.1-39.2,139.43-7.62,33.9-14.16,56.22-8,89.92,2.57,13.91,19.33,25.29,29.17,12.25,4.54-6-.22-5.98,7.57-17.92,3.34-5.13,6.5-10.13,10.16-15.4,14.52-20.85,26.21-39.59,42.05-60.95,29.44-39.64,63.8-76.96,90.19-113.99,7.5-10.52,33.66-51.41,43.28-58.51-10.44,48.84-32.61,100.93-44.08,152.27-2.88,12.86-6,29.07-6.91,42.76-.98,14.77,5.56,30.02,20.99,28.02,11.13-1.43,11.7-9.32,20.45-21.79-2.39,24.46,30.17,30.68,36.83,6.86,6.37-22.72-3.76-20.43,22.78-42.86,3.49-2.96,7.1-7.11,11.86-9.76-2.17,10.47-9.98,22.11-9.66,32.76,.37,12.1,8.64,22.67,21.23,17.82,10.84-4.2,11.62-15.91,15.13-27.68,1.83-6.08,14.43-21.58,17.94-23.7-2.37,10.98-12.4,24.82-3.68,41.99,3,5.93,8.62,9.1,17.55,8.86,8.42-.22,12.45-5.05,17.7-8.66,8.49-5.84,24.87-13.11,35.59-17.26,14.36-5.56,23.24-9.15,40.3-12.57,4.06-.83,7.64-1.15,11.59-2.1,7.06-1.73,4.08-1.26,10.01,.24,20.06,5.13,20.78-25.48,.93-22.04-5.59,.98-3.35,2-11.28,2.07-10.21,.07-40.62,11.91-50.24,15.69-10.91,4.32-27.78,12.4-38.64,14.99,1.44-10.72,2.84-20.65,4.35-31.22,1.34-9.57-1.81-19.82-9.84-22.43-12.47-4.03-23.48,13.07-30.49,20.48-2.2,2.3-5.49,5.12-8.03,7.91-1.59-8.66-1.29-16.4-7.11-20.19-12.23-7.96-23.8,7.98-32.85,16.23-4.03,3.66-10.28,10.47-14.36,12.89,1.27-7.74,9.01-30.85,6.52-37.61-5.71-15.39-27.9,22.94-31.76,28.02-3.24,4.32-6.4,7.96-9.61,12.26-1.18,1.59-3.1,3.66-4.69,5.88-4.83,3.66-9.4,7.28-11.94,8.43-1.49-20.22,32-121.37,39.22-150,2.96-11.67,13.96-48.58,5.96-59-3.47-4.47-10.57-7.25-17.09-3.29-3.9,2.39-7.25,9.25-10.52,13.13-3.17,3.73-8.47,8.54-11.18,12.55-3.88,5.74-6.62,8.47-10.37,13.27-3.36,4.3-6.54,9.55-9.62,14.11-19.58,29.07-27.34,41.4-50.43,68.1-30.37,35.13-68.39,82.92-93.73,119.61-6.1,8.86-13.2,19.06-19.79,26.19h0Z" fill="#e1e1e1" fill-rule="evenodd"/>
+    <g>
+      <path d="M370.04,272.96c.1-.04,.69,1.34,2.08,3.8,1.41,2.44,3.69,5.99,7.5,9.75,1.91,1.86,4.2,3.8,6.93,5.52,2.73,1.66,6.03,3.14,9.71,3.36,1.82,.09,3.74-.12,5.43-.99,1.72-.82,3.08-2.27,4.39-4,1.3-1.68,2.83-3.66,5.03-4.83,2.11-1.2,4.42-1.87,6.38-3.02,3.98-2.29,6.88-6.57,8.34-11.43,1.5-4.89,1.58-10.35,1.37-15.99-.22-5.68-.46-11.55-.69-17.6-.28-6.05-.33-12.29-1.1-18.54-1.52-12.47-7.14-25-16.09-35.36-4.45-5.15-9.72-9.93-15.66-13.6-2.99-1.8-6.2-3.09-9.67-3.73-3.46-.68-7.08-.87-10.77-1.09-7.35-.46-14.54-.7-21.44,.79-6.92,1.4-13.53,3.86-20.1,6.16-6.57,2.31-13.2,4.43-19.98,5.33-6.74,.98-13.73,.44-19.88-1.84-6.16-2.16-11.65-5.19-17.24-7.19-2.79-1-5.61-1.75-8.42-2.02-1.38-.1-2.86-.22-4.08-.03-1.27,.2-2.01,.73-2.56,1.87-2.1,4.98-3.58,10.42-3.06,15.42,.47,5.04,2.86,9.56,5.94,13.07,3.11,3.52,6.85,6.18,10.67,8.04,3.84,1.85,7.78,2.94,11.5,3.67,7.48,1.39,14.11,1.46,19.5,1.62,5.4,.14,9.59,.25,12.45,.32,1.42,.06,2.5,.11,3.24,.15,.73,.05,1.1,.09,1.1,.13s-.37,.08-1.1,.12c-.74,.02-1.82,.06-3.24,.1-2.86,.03-7.05,.08-12.45,.14-5.4-.01-12.08,.07-19.74-1.22-3.82-.69-7.88-1.73-11.93-3.61-4.02-1.89-7.97-4.61-11.31-8.31-3.3-3.68-5.95-8.52-6.53-14.05-.32-2.74-.07-5.57,.51-8.32,.61-2.79,1.41-5.41,2.61-8.21,.35-.71,.86-1.48,1.62-2.04,.75-.56,1.62-.83,2.43-.97,1.64-.26,3.1-.12,4.63-.03,3.04,.27,6.04,1.06,8.95,2.08,5.83,2.05,11.34,5.05,17.26,7.08,5.88,2.13,12.32,2.61,18.82,1.66,6.5-.88,12.96-2.96,19.49-5.28,6.54-2.3,13.24-4.82,20.42-6.29,7.2-1.57,14.74-1.31,22.08-.85,3.67,.22,7.4,.41,11.09,1.13,3.7,.68,7.31,2.12,10.46,4.04,3.19,1.9,6.01,4.18,8.73,6.53,2.72,2.35,5.21,4.92,7.51,7.61,9.21,10.72,15,23.73,16.51,36.66,.76,6.45,.77,12.7,1.02,18.74,.2,6.05,.39,11.93,.57,17.61,.16,5.69,.05,11.38-1.6,16.62-1.62,5.18-4.8,9.86-9.31,12.38-2.24,1.26-4.54,1.89-6.43,2.95-1.92,.99-3.24,2.64-4.61,4.36-1.33,1.71-2.95,3.43-4.99,4.35-1.99,.98-4.18,1.16-6.17,1.03-4.03-.33-7.43-1.96-10.25-3.75-2.8-1.85-5.07-3.88-6.98-5.84-3.79-3.96-5.97-7.65-7.25-10.2-.64-1.28-1.06-2.29-1.32-2.97-.25-.69-.36-1.05-.32-1.06Z" fill="#d8c722"/>
+      <path d="M319.5,278.08c.24,.01-.22,1.37,.96,3.13,1.13,1.71,4.08,3.56,7.76,2.35,1.81-.51,3.67-1.56,5.62-2.84,1.97-1.29,4.05-2.71,6.12-4.31,4.09-3.2,8.4-7.27,10.52-12.72,2.17-5.41,1.23-11.34,.67-16.56-.3-2.55-1.04-4.79-2.74-5.76-1.7-1.01-3.91-.96-5.7-.57-3.69,.88-6.04,3.3-7.24,5.05-1.23,1.8-1.52,3.05-1.73,2.99-.12-.01-.17-1.37,.89-3.49,1.04-2.05,3.4-4.98,7.63-6.26,2.07-.55,4.64-.84,7.17,.48,1.25,.67,2.27,1.86,2.87,3.17,.61,1.31,.9,2.69,1.12,4.06,.37,2.69,.77,5.47,.85,8.49,.1,2.99-.26,6.25-1.47,9.3-2.42,6.17-7.15,10.43-11.46,13.65-2.19,1.62-4.36,2.99-6.41,4.24-2.06,1.24-4.15,2.31-6.28,2.79-2.09,.5-4.27,.34-5.84-.51-1.57-.8-2.63-1.96-3.19-3.05-.56-1.11-.61-2.11-.5-2.73,.11-.63,.31-.91,.37-.89Z" fill="#d8c722"/>
+      <path d="M342.79,255.78c.24-.12,1.42,2.01,.91,5.72-.27,1.82-.99,3.95-2.4,5.98-1.4,2.01-3.5,3.93-6.22,5.02-.7,.24-1.34,.49-2.09,.62-.74,.14-1.66,.19-2.56-.19-.9-.37-1.56-1.14-1.88-1.89-.33-.76-.42-1.53-.38-2.25,.08-1.5,.87-2.7,1.55-3.52,.72-.86,1.44-1.49,2.03-2.07,1.19-1.12,1.86-2.19,2.13-3.01,.28-.82,.22-1.36,.4-1.41,.13-.06,.56,.45,.55,1.56,0,1.1-.62,2.63-1.78,4.04-1.06,1.36-2.63,2.89-2.61,4.51-.02,.85,.38,1.65,.89,1.79,.48,.26,1.72-.09,2.81-.49,4.48-1.79,6.99-6,7.81-9.05,.88-3.14,.42-5.27,.82-5.36Z" fill="#d8c722"/>
+      <path d="M288.88,211.74c-.14,.16-.82-.83-2.45-.54-.75,.12-1.75,.63-2.07,1.51-.3,.87,.08,2.08,1.26,2.84,1.16,.82,2.75,1.34,4.58,1.74,1.87,.44,3.86,.94,5.94,1.5,4.17,1.13,8.71,2.52,13.41,4.16,9.41,3.28,17.64,7.03,23.44,10.02,5.79,3.01,9.18,5.22,9.02,5.51-.34,.65-14.64-6.7-33.28-13.19-4.65-1.63-9.13-3.07-13.22-4.31-2.05-.6-4-1.17-5.83-1.7-1.87-.51-3.71-1.18-5.14-2.35-1.51-1.1-2.24-3.27-1.45-4.8,.82-1.51,2.26-1.88,3.25-1.91,1.04-.04,1.81,.41,2.17,.78,.38,.38,.41,.69,.36,.72Z" fill="#d8c722"/>
+      <path d="M288.94,235.48c.16,.03,.25,.57,.17,1.54-.1,.96-.29,2.39-1.26,4.04-.5,.8-1.31,1.68-2.49,2.13-1.15,.49-2.67,.42-3.9-.17-1.25-.58-2.28-1.57-3.01-2.82-.75-1.28-1.02-2.74-1.06-4.16-.02-2.86,.71-5.21,1.14-7.37,.49-2.16,.96-4.1,1.4-5.72,.87-3.24,1.57-5.22,1.91-5.15,.34,.07,.24,2.16-.18,5.49-.21,1.67-.51,3.64-.87,5.83-.33,2.19-.94,4.6-.9,6.87,.03,1.13,.24,2.2,.7,3.02,.46,.85,1.16,1.56,1.9,1.96,1.5,.84,3.05,.2,3.94-.93,.91-1.14,1.39-2.42,1.75-3.25,.36-.85,.6-1.34,.77-1.31Z" fill="#d8c722"/>
+      <path d="M329.32,239.03c-.11,.31-2.54-.27-6.19-1.83-3.67-1.51-8.48-4.08-13.9-6.36-5.42-2.3-10.6-3.33-14.45-3.57-3.84-.28-6.27-.08-6.33-.45-.06-.31,2.32-1.14,6.36-1.31,4.01-.22,9.72,.62,15.37,3.03,5.65,2.38,10.31,5.19,13.73,7.08,3.4,1.94,5.54,3.07,5.41,3.41Z" fill="#d8c722"/>
+      <path d="M281.21,256.99c-.17,.1-.65-.38-1.37-1.32l1.03-.25c.31,1.76-1.81,4.69-5.31,4.48-1.65-.08-3.27-.8-4.7-1.74-1.42-.95-2.87-2.16-3.95-3.87-.75-1.19-1.25-2.63-1.19-4.07,.04-1.43,.57-2.74,1.23-3.73,1.35-1.99,2.9-3.19,4.03-4.29,2.37-2.09,3.05-3.84,3.41-3.78,.14,.03,.22,.59-.08,1.52-.28,.93-.99,2.17-2.04,3.45-1.02,1.29-2.42,2.67-3.36,4.29-.96,1.61-1.06,3.51,.11,5.3,.8,1.28,1.98,2.35,3.19,3.22,1.2,.87,2.42,1.47,3.54,1.62,1.1,.18,2.09-.15,2.82-.66,.72-.51,1.09-1.18,1.21-1.76l.39-1.88,.63,1.63c.43,1.1,.59,1.76,.42,1.86Z" fill="#d8c722"/>
+      <path d="M302.51,350.77c-.07,.12-1.52-.5-3.58-2.42-2.01-1.9-4.66-5.31-5.72-10.36-.54-2.48-.64-5.18-1.48-7.76-.77-2.63-2.26-5.21-4.2-7.64-1.97-2.42-4.43-4.66-7.17-6.75-2.75-2.14-5.78-3.92-8.98-6.14-3.13-2.18-6.1-5.71-5.97-9.97,.04-2.17,1.23-3.96,1.92-5.31,.77-1.41,.87-2.55,.54-4.04-.31-1.43-.93-2.89-1.37-4.45-.22-.79-.39-1.63-.4-2.53-.03-.9,.27-1.88,.78-2.64,1.1-1.58,2.57-2.07,3.44-2.82,.91-.73,.97-1.24,.4-2.04-.59-.75-1.83-1.68-2.18-3.05-.38-1.31-.14-2.52,.19-3.51,.71-2.02,1.91-3.31,2.66-4.41,1.64-2.15,1.78-3.66,1.97-3.65,.17-.04,.32,1.73-1.15,4.17-.67,1.23-1.68,2.57-2.14,4.3-.23,.85-.31,1.8-.02,2.62,.25,.83,1.05,1.34,2.04,2.42,.47,.52,.95,1.45,.81,2.4-.12,1-.78,1.74-1.35,2.22-1.15,.97-2.43,1.58-2.93,2.46-.57,.84-.44,2.07-.02,3.44,.42,1.38,1.09,2.83,1.5,4.56,.19,.87,.36,1.81,.23,2.83-.09,1.03-.48,1.96-.87,2.77-.83,1.64-1.61,2.9-1.61,4.34-.04,1.44,.49,2.99,1.39,4.33,.88,1.34,2.18,2.5,3.61,3.55,6.08,3.99,12.38,8.12,16.47,13.48,2.05,2.65,3.62,5.55,4.39,8.49,.84,2.95,.82,5.69,1.22,8.01,.75,4.66,2.98,8,4.69,10.02,1.75,2.03,3,2.92,2.88,3.09Z" fill="#d8c722"/>
+      <path d="M348.4,316.74c-.71-.19,1.56-7.93-.34-17.38-1.74-9.44-6.11-16.2-5.45-16.61,.26-.18,1.69,1.29,3.39,4.11,1.69,2.81,3.57,7.05,4.5,12.04,.93,4.99,.66,9.66-.08,12.88-.73,3.24-1.74,5.05-2.02,4.95Z" fill="#d8c722"/>
+      <path d="M357.87,324.25c.17-.36,3.3,1.16,8.77,.68,2.72-.14,5.99-.68,9.81-.72,1.89-.01,4,.19,5.99,.7,1.99,.47,3.94,1.06,5.84,1.16,1.88,.09,3.76-.36,4.93-1.4,1.18-.98,1.59-2.68,1.8-4.44,.46-3.5,.22-6.76-.08-9.48-.69-5.45-1.36-8.88-.98-8.96,.29-.06,1.56,3.15,2.72,8.69,.54,2.77,.99,6.18,.62,10.01-.17,1.82-.53,4.27-2.46,6-1.86,1.66-4.34,2.16-6.67,2.06-2.36-.14-4.4-.8-6.3-1.28-1.89-.51-3.65-.71-5.44-.77-3.56-.09-6.89,.27-9.74,.19-2.85-.02-5.19-.51-6.69-1.11-1.51-.58-2.19-1.21-2.12-1.32Z" fill="#d8c722"/>
+      <path d="M327.88,290.85c.27,.12-.47,2.68-2.7,6.34-2.21,3.65-6.11,8.26-11.49,12.04-5.39,3.76-11.07,5.84-15.25,6.67-4.2,.84-6.86,.65-6.88,.36-.04-.39,2.52-.83,6.43-2.06,3.92-1.22,9.15-3.44,14.27-7,5.1-3.58,8.98-7.75,11.47-11.01,2.5-3.26,3.79-5.51,4.14-5.34Z" fill="#d8c722"/>
+      <path d="M390.46,343.28c.08-.15,1.82,.59,4.89,2.07,.77,.37,1.62,.79,2.55,1.24,.85,.5,2.13,.78,2.97,2.27,.37,.75,.3,1.83-.4,2.54-.67,.66-1.48,.88-2.24,1.01-.78,.12-1.56,.09-2.36-.03-.72-.16-1.46-.33-2.22-.5-5.93-1.42-12.97-3.11-20.79-4.98-3.91-.97-8.01-1.98-12.26-3.03-4.25-1.08-8.76-2.35-13.02-4.55-4.21-2.14-8.01-4.56-12.03-5.48-3.99-.96-8.07-.23-11.63,1.24-7.2,3.03-12.5,8.13-17.4,11.78-4.86,3.74-9.37,6.16-12.75,7.05-3.36,.95-5.32,.73-5.31,.62-.03-.23,1.88-.34,5.01-1.54,3.15-1.13,7.32-3.66,11.97-7.51,4.68-3.74,9.91-9.11,17.6-12.52,3.8-1.65,8.45-2.57,13.05-1.5,4.59,1.04,8.56,3.59,12.61,5.63,4.02,2.07,8.3,3.3,12.51,4.41,4.24,1.1,8.32,2.16,12.22,3.17,7.77,2.07,14.77,3.93,20.66,5.5,1.52,.42,2.75,.84,3.95,.67,.58-.06,1.12-.23,1.39-.48,.24-.21,.31-.59,.18-.93-.3-.73-1.38-1.27-2.26-1.79-.89-.52-1.71-1-2.44-1.43-2.93-1.74-4.51-2.77-4.43-2.93Z" fill="#d8c722"/>
+      <path d="M391.31,344.7c-.13,.29-1.44,.09-3.26-.97-1.81-1.05-4.02-3.09-5.58-5.94-1.54-2.85-2.05-5.82-1.94-7.91,.1-2.11,.65-3.31,.96-3.26,.72,.08,.37,4.98,3.17,9.98,2.67,5.08,6.97,7.45,6.65,8.1Z" fill="#d8c722"/>
+      <path d="M259.89,493.24c-.26,.04,.06-2.39-1.79-5.95-.93-1.73-2.49-3.7-4.88-5.08-1.2-.69-2.63-1.2-4.19-1.81-1.54-.61-3.29-1.32-4.8-2.69-1.53-1.35-2.57-3.27-3.16-5.31-.6-2.06-.77-4.25-.76-6.46,.12-4.41,.68-9.05,1.67-13.86,1.94-9.63,5.62-19.74,8.71-30.42,3.26-10.62,4.29-21.26,6.95-30.76,1.29-4.74,3.04-9.16,5.21-13,2.15-3.85,4.7-7.1,7.24-9.82,5.14-5.44,10.35-8.67,14.07-10.46,3.74-1.81,5.98-2.35,6.02-2.22,.08,.2-2.04,1.05-5.56,3.08-3.51,2.02-8.42,5.39-13.22,10.8-4.84,5.36-9.25,12.91-11.54,22.23-2.47,9.23-3.46,20.01-6.77,30.85-3.14,10.82-6.85,20.81-8.86,30.21-1.03,4.68-1.65,9.22-1.85,13.43-.16,4.14,.6,8.15,3.05,10.45,2.43,2.29,5.94,2.91,8.5,4.59,2.61,1.67,4.18,3.91,5.04,5.84,.87,1.95,1.09,3.61,1.12,4.7,.02,1.11-.13,1.67-.19,1.67Z" fill="#d8c722"/>
+      <path d="M230.99,652.03c-.14,.03-.93-2.39-1.74-6.93-.83-4.53-1.5-11.19-1.57-19.42-.09-8.24,.39-17.99,.85-28.81,.5-10.83,1.18-22.75,2.67-35.22,.75-6.23,1.67-12.3,2.78-18.12,1.12-5.82,2.4-11.34,3.16-16.64,.79-5.29,.96-10.39,1.04-15.19,.06-4.81,.11-9.3,.16-13.39,.11-8.19,.24-14.82,.39-19.4,.15-4.58,.31-7.12,.48-7.12,.17,0,.34,2.53,.49,7.12,.15,4.58,.29,11.21,.4,19.4,.04,4.1,.09,8.59,.15,13.41,0,4.83-.08,10.04-.83,15.49-.72,5.44-1.96,11.02-3.04,16.78-1.07,5.76-1.96,11.78-2.7,17.96-1.48,12.37-2.22,24.24-2.85,35.04-.58,10.81-1.24,20.55-1.38,28.7-.15,8.16,.24,14.75,.77,19.28,.51,4.53,.98,7.03,.79,7.07Z" fill="#d8c722"/>
+      <path d="M335.12,376.07c.07-.06,.59,.47,1.54,1.52,.98,1.03,2.29,2.66,3.88,4.83,3.17,4.35,7.19,11.16,10.29,20.35,3,9.17,5,20.82,3.57,33.64-.67,6.41-2.38,12.97-4.48,19.55-2.05,6.6-4.4,13.32-5.79,20.38-.72,3.53-1,7.02-1.36,10.63-.4,3.56-1.03,7.28-2.86,10.54-1.74,3.2-4.7,6.03-8.42,6.8-3.7,.7-6.94-.12-10.09-.51-12.66-2.06-23.5-6.07-32.43-9.53-8.93-3.54-16.03-6.63-20.96-8.74-4.92-2.14-7.6-3.39-7.54-3.55,.06-.16,2.87,.79,7.9,2.65,5.03,1.9,12.27,4.63,21.22,8,8.97,3.24,19.76,7.02,32.16,8.91,3.09,.38,6.37,1.07,9.24,.45,2.86-.61,5.27-2.86,6.79-5.66,3.15-5.67,2.3-13.17,3.92-20.47,1.44-7.3,3.84-14.09,5.91-20.63,2.12-6.54,3.82-12.89,4.53-19.09,1.51-12.42-.24-23.8-2.97-32.84-2.83-9.06-6.54-15.88-9.42-20.35-1.46-2.23-2.62-3.94-3.47-5.06-.82-1.15-1.22-1.78-1.15-1.83Z" fill="#d8c722"/>
+      <path d="M203.01,739.6c-.08-.03,.11-.88,.54-2.49,.46-1.61,1.14-3.96,2.01-6.98,1.8-6.04,4.47-14.77,7.83-25.53,6.72-21.52,16.16-51.2,26.74-83.93,5.2-16.39,10.66-31.87,14.33-46.23,3.71-14.36,5.21-27.68,6.03-38.89,.81-11.21,1.02-20.33,1.26-26.63,.13-3.14,.23-5.58,.3-7.25,.09-1.66,.18-2.53,.27-2.53s.16,.87,.23,2.53c.07,1.66,.13,4.11,.17,7.26,.06,6.31,.12,15.44-.47,26.73-.6,11.27-1.93,24.77-5.56,39.33-3.6,14.56-8.99,30.05-14.19,46.44-10.58,32.73-20.28,62.33-27.43,83.71-3.57,10.69-6.5,19.33-8.58,25.28-1.06,2.96-1.89,5.26-2.45,6.84-.59,1.55-.93,2.36-1.02,2.33Z" fill="#d8c722"/>
+      <path d="M403.98,350.64c.41,.64,.73,1.57,.98,2.69,.23,1.14,.59,2.54,1.24,3.96,1.26,2.9,3.64,5.94,6.37,9.29,1.34,1.7,2.65,3.6,4.11,5.56,1.3,2.07,2.76,4.21,4.06,6.59,2.7,4.71,5.09,10.17,7.24,16.17,1.54,4.38,2.74,9.19,3.8,14.16l1.81-2.18c-1.04-4.43-2.21-8.73-3.66-12.68-2.28-6.09-4.81-11.62-7.66-16.36-1.37-2.4-2.91-4.55-4.29-6.62-1.54-1.96-2.92-3.86-4.33-5.53-2.85-3.3-5.24-6.13-6.57-8.83-.69-1.34-1.09-2.57-1.4-3.73-.35-1.15-.75-2.12-1.29-2.79-.51-.69-1.2-1.01-1.65-.99-.45,0-.64,.16-.64,.17-.04,.14,1.05-.28,1.88,1.1Z" fill="#d8c722"/>
+    </g>
+  </g>
+</svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left reveal">
+      <h1>Manoj Mathangadeera</h1>
+      <p class="hero-descriptor">Bridging brushstrokes and pixels — crafting brand stories through design, code, and strategy.</p>
+    </div>
+    <div class="hero-right reveal" style="transition-delay: 0.15s">
+      <div class="hero-tags">
+        <span class="tag">Brand Strategy</span>
+        <span class="tag">Web Development</span>
+        <span class="tag">Graphic Design</span>
+        <span class="tag">Digital Marketing</span>
+        <span class="tag">UI / UX</span>
+        <span class="tag">Creative Direction</span>
+      </div>
+      <a href="#contact" class="hero-cta">Start a project <span>→</span></a>
+      <p class="hero-location">📍 Dubai, UAE &nbsp;·&nbsp; Available for projects</p>
+    </div>
+    <div class="hero-index">Est. Creative Strategist — Developer</div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Brand Identity</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Web Development</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Digital Marketing</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">UI Design</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Creative Strategy</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Visual Storytelling</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Brand Identity</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Web Development</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Digital Marketing</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">UI Design</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Creative Strategy</span><span class="marquee-item accent">✦</span>
+      <span class="marquee-item">Visual Storytelling</span><span class="marquee-item accent">✦</span>
+    </div>
+  </div>
+
+  <section class="about" id="about">
+    <div class="section-label reveal">About</div>
+    <div class="about-text reveal" style="transition-delay: 0.1s">
+      <h2>Designer at heart,<br><em>developer by craft,</em><br>strategist by nature.</h2>
+      <p>My journey began not with pixels, but with paint — oil on canvas, capturing nature's poetry. Then came the digital chapter. From humble logo recreation to full brand ecosystems, I've carved a space where creativity meets strategy.</p>
+      <p>Today I help brands build meaningful digital footprints — shaping identity through thoughtful design, development, and storytelling that lasts.</p>
+    </div>
+    <div class="about-stats reveal" style="transition-delay: 0.2s">
+      <div class="stat-item">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Websites Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Brand Projects</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">UAE</div>
+        <div class="stat-label">Based in Dubai</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-header">
+      <div class="section-label reveal">Services</div>
+      <h2 class="services-title reveal" style="transition-delay: 0.1s">What I <em>bring</em><br>to the table</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-num">01</div>
+        <div class="service-name">Brand Strategy & Identity</div>
+        <div class="service-desc">Logo design, brand guidelines, visual systems, stationery, and the full identity toolkit that makes a brand unmistakable.</div>
+        <div class="service-arrow">↗</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.1s">
+        <div class="service-num">02</div>
+        <div class="service-name">Web Design & Development</div>
+        <div class="service-desc">Custom websites built with clean code — from landing pages to full business sites. Fast, responsive, and built to convert.</div>
+        <div class="service-arrow">↗</div>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.2s">
+        <div class="service-num">03</div>
+        <div class="service-name">Digital Marketing & Content</div>
+        <div class="service-desc">Social media design, digital campaigns, outdoor media, and content strategy that connects brands with their audience.</div>
+        <div class="service-arrow">↗</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <div class="work-header">
+      <div class="section-label reveal">Web Work</div>
+      <h2 class="work-title reveal" style="transition-delay: 0.1s">Selected <em>websites</em></h2>
+      <a href="https://dribbble.com/aurtik" target="_blank" class="work-link reveal" style="transition-delay: 0.15s">View all →</a>
+    </div>
+    <div class="work-list">
+      <a href="https://adeon.ae" target="_blank" class="work-item reveal">
+        <span class="work-num">01</span><span class="work-item-name">Adeon.ae</span>
+        <span class="work-item-type">Corporate · Web</span><span class="work-item-year">2025</span>
+      </a>
+      <a href="https://adeon.digital" target="_blank" class="work-item reveal" style="transition-delay:0.05s">
+        <span class="work-num">02</span><span class="work-item-name">Adeon Digital</span>
+        <span class="work-item-type">Digital Agency · Web</span><span class="work-item-year">2025</span>
+      </a>
+      <a href="https://rekoglobal.com/en/" target="_blank" class="work-item reveal" style="transition-delay:0.1s">
+        <span class="work-num">03</span><span class="work-item-name">Reko Global</span>
+        <span class="work-item-type">Corporate · Brand · Web</span><span class="work-item-year">2025</span>
+      </a>
+      <a href="https://www.usriengineers.lk/" target="_blank" class="work-item reveal" style="transition-delay:0.15s">
+        <span class="work-num">04</span><span class="work-item-name">U-SRI Engineers</span>
+        <span class="work-item-type">Engineering · Web</span><span class="work-item-year">2024</span>
+      </a>
+      <a href="https://ceylonvanilla.lk/" target="_blank" class="work-item reveal" style="transition-delay:0.2s">
+        <span class="work-num">05</span><span class="work-item-name">Ceylon Vanilla</span>
+        <span class="work-item-type">E-commerce · Brand · Web</span><span class="work-item-year">2024</span>
+      </a>
+      <a href="https://fintree.ae/en/" target="_blank" class="work-item reveal" style="transition-delay:0.25s">
+        <span class="work-num">06</span><span class="work-item-name">Fintree</span>
+        <span class="work-item-type">Finance · Web</span><span class="work-item-year">2024</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="design">
+    <div class="design-header">
+      <div class="section-label reveal">Design Work</div>
+      <h2 class="design-title reveal" style="transition-delay: 0.1s">Brand &amp; <em>visual</em><br>projects</h2>
+      <a href="https://dribbble.com/aurtik" target="_blank" class="work-link reveal" style="transition-delay: 0.15s">Dribbble →</a>
+    </div>
+    <div class="design-grid reveal" style="transition-delay: 0.1s">
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44141843/file/original-fe55195fad66e4da2cdda49dd2292eb6.png?resize=400x0" alt="Company Profile" loading="lazy"><div class="design-item-label">Company Profile</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44024416/file/original-c23bafe31e2c5b42f4b8dca8468ad03d.png?resize=400x0" alt="Jambu Brand Guide" loading="lazy"><div class="design-item-label">Jambu Brand Guide</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44024996/file/original-17c73581f2fd17e98d4b6c06522440db.png?resize=400x0" alt="REKO Web" loading="lazy"><div class="design-item-label">REKO Web</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44141017/file/original-577cd137a3fc8273d0acbe4b17f35dcc.png?resize=400x0" alt="JETEX Outdoor" loading="lazy"><div class="design-item-label">JETEX Outdoor</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44011815/file/original-dbf43b29fd250fc1090b0242832d116c.jpg?resize=400x0" alt="AutoFleet" loading="lazy"><div class="design-item-label">AutoFleet</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44141251/file/original-733e898c1396701b0ea32c97e508fad7.jpg?resize=400x0" alt="Outdoor Media" loading="lazy"><div class="design-item-label">Outdoor Media</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44010192/file/original-50cf975dcadc0daccf58949f25defe30.jpg?resize=400x0" alt="Meraki" loading="lazy"><div class="design-item-label">Meraki Brand</div></div>
+      <div class="design-item"><img src="https://cdn.dribbble.com/userupload/44113571/file/original-d392503ef5f7f5c72d8e580f56fec25e.png?resize=400x0" alt="Beyond the Prompt" loading="lazy"><div class="design-item-label">Beyond the Prompt</div></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-label reveal">Contact</div>
+    <div class="contact-content reveal" style="transition-delay: 0.1s">
+      <h2>Let's build<br>something <em>great</em><br>together.</h2>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/mmlspace/" target="_blank" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span><span>Manoj Mathangadeera →</span>
+        </a>
+        <a href="https://dribbble.com/aurtik" target="_blank" class="contact-link">
+          <span class="contact-link-label">Dribbble</span><span>@aurtik →</span>
+        </a>
+        <a href="https://github.com/CodemmHub" target="_blank" class="contact-link">
+          <span class="contact-link-label">GitHub</span><span>CodemmHub →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo"><svg class="logo-svg logo-dark" id="uuid-266dec3d-7807-4396-92e9-22ca927018dc" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+  <rect x="0" y="0" width="1000" height="1000" fill="#0a1e2c"/>
+  <g>
+    <path d="M395.59,681.04c-.47-10.03,3.24-30.07,5.02-40.11,10.72-60.75,35.96-151.84,59.29-208.67,4.51-11.01,9.27-19.65,14.67-30.07,1.76-3.4,6.47-12.06,7.1-15.6,1.32-7.23-2.36-12.33-8.05-13.16-12.64-1.88-27.34,24.14-33.22,33.81-5.74,9.41-57.9,80.39-65.35,90.59-12.43,17.04-23.38,36.42-36.05,52.96,1.64-8.08,6.25-10.4,.63-17.84-9.42-5.69-30.37,31.39-33.46,36.37-26.88,43.38-52.71,86.43-78.58,132.03l-39.27,66.54c-2.34,4.13-4.74,6.88-6.96,10.3-4,6.17-17.01,29.51-18.06,34.78-5.28,26.34,13.96,27.78,22.38,21.56,4.52-3.32,15.3-27.63,18.41-33.56,8.27-15.89,16.23-31.03,24.43-45.72,26.2-46.89,48.53-87.51,76.84-132.96,37.32-59.95,59.12-92.15,98.03-147.17,4.27-6.06,9.83-14.72,14.7-19.73-1.1,5.18-4.74,13.7-6.76,19.61-15.53,45.5-28.54,92.1-39.2,139.43-7.62,33.9-14.16,56.22-8,89.92,2.57,13.91,19.33,25.29,29.17,12.25,4.54-6-.22-5.98,7.57-17.92,3.34-5.13,6.5-10.13,10.16-15.4,14.52-20.85,26.21-39.59,42.05-60.95,29.44-39.64,63.8-76.96,90.19-113.99,7.5-10.52,33.66-51.41,43.28-58.51-10.44,48.84-32.61,100.93-44.08,152.27-2.88,12.86-6,29.07-6.91,42.76-.98,14.77,5.56,30.02,20.99,28.02,11.13-1.43,11.7-9.32,20.45-21.79-2.39,24.46,30.17,30.68,36.83,6.86,6.37-22.72-3.76-20.43,22.78-42.86,3.49-2.96,7.1-7.11,11.86-9.76-2.17,10.47-9.98,22.11-9.66,32.76,.37,12.1,8.64,22.67,21.23,17.82,10.84-4.2,11.62-15.91,15.13-27.68,1.83-6.08,14.43-21.58,17.94-23.7-2.37,10.98-12.4,24.82-3.68,41.99,3,5.93,8.62,9.1,17.55,8.86,8.42-.22,12.45-5.05,17.7-8.66,8.49-5.84,24.87-13.11,35.59-17.26,14.36-5.56,23.24-9.15,40.3-12.57,4.06-.83,7.64-1.15,11.59-2.1,7.06-1.73,4.08-1.26,10.01,.24,20.06,5.13,20.78-25.48,.93-22.04-5.59,.98-3.35,2-11.28,2.07-10.21,.07-40.62,11.91-50.24,15.69-10.91,4.32-27.78,12.4-38.64,14.99,1.44-10.72,2.84-20.65,4.35-31.22,1.34-9.57-1.81-19.82-9.84-22.43-12.47-4.03-23.48,13.07-30.49,20.48-2.2,2.3-5.49,5.12-8.03,7.91-1.59-8.66-1.29-16.4-7.11-20.19-12.23-7.96-23.8,7.98-32.85,16.23-4.03,3.66-10.28,10.47-14.36,12.89,1.27-7.74,9.01-30.85,6.52-37.61-5.71-15.39-27.9,22.94-31.76,28.02-3.24,4.32-6.4,7.96-9.61,12.26-1.18,1.59-3.1,3.66-4.69,5.88-4.83,3.66-9.4,7.28-11.94,8.43-1.49-20.22,32-121.37,39.22-150,2.96-11.67,13.96-48.58,5.96-59-3.47-4.47-10.57-7.25-17.09-3.29-3.9,2.39-7.25,9.25-10.52,13.13-3.17,3.73-8.47,8.54-11.18,12.55-3.88,5.74-6.62,8.47-10.37,13.27-3.36,4.3-6.54,9.55-9.62,14.11-19.58,29.07-27.34,41.4-50.43,68.1-30.37,35.13-68.39,82.92-93.73,119.61-6.1,8.86-13.2,19.06-19.79,26.19h0Z" fill="#e1e1e1" fill-rule="evenodd"/>
+    <g>
+      <path d="M370.04,272.96c.1-.04,.69,1.34,2.08,3.8,1.41,2.44,3.69,5.99,7.5,9.75,1.91,1.86,4.2,3.8,6.93,5.52,2.73,1.66,6.03,3.14,9.71,3.36,1.82,.09,3.74-.12,5.43-.99,1.72-.82,3.08-2.27,4.39-4,1.3-1.68,2.83-3.66,5.03-4.83,2.11-1.2,4.42-1.87,6.38-3.02,3.98-2.29,6.88-6.57,8.34-11.43,1.5-4.89,1.58-10.35,1.37-15.99-.22-5.68-.46-11.55-.69-17.6-.28-6.05-.33-12.29-1.1-18.54-1.52-12.47-7.14-25-16.09-35.36-4.45-5.15-9.72-9.93-15.66-13.6-2.99-1.8-6.2-3.09-9.67-3.73-3.46-.68-7.08-.87-10.77-1.09-7.35-.46-14.54-.7-21.44,.79-6.92,1.4-13.53,3.86-20.1,6.16-6.57,2.31-13.2,4.43-19.98,5.33-6.74,.98-13.73,.44-19.88-1.84-6.16-2.16-11.65-5.19-17.24-7.19-2.79-1-5.61-1.75-8.42-2.02-1.38-.1-2.86-.22-4.08-.03-1.27,.2-2.01,.73-2.56,1.87-2.1,4.98-3.58,10.42-3.06,15.42,.47,5.04,2.86,9.56,5.94,13.07,3.11,3.52,6.85,6.18,10.67,8.04,3.84,1.85,7.78,2.94,11.5,3.67,7.48,1.39,14.11,1.46,19.5,1.62,5.4,.14,9.59,.25,12.45,.32,1.42,.06,2.5,.11,3.24,.15,.73,.05,1.1,.09,1.1,.13s-.37,.08-1.1,.12c-.74,.02-1.82,.06-3.24,.1-2.86,.03-7.05,.08-12.45,.14-5.4-.01-12.08,.07-19.74-1.22-3.82-.69-7.88-1.73-11.93-3.61-4.02-1.89-7.97-4.61-11.31-8.31-3.3-3.68-5.95-8.52-6.53-14.05-.32-2.74-.07-5.57,.51-8.32,.61-2.79,1.41-5.41,2.61-8.21,.35-.71,.86-1.48,1.62-2.04,.75-.56,1.62-.83,2.43-.97,1.64-.26,3.1-.12,4.63-.03,3.04,.27,6.04,1.06,8.95,2.08,5.83,2.05,11.34,5.05,17.26,7.08,5.88,2.13,12.32,2.61,18.82,1.66,6.5-.88,12.96-2.96,19.49-5.28,6.54-2.3,13.24-4.82,20.42-6.29,7.2-1.57,14.74-1.31,22.08-.85,3.67,.22,7.4,.41,11.09,1.13,3.7,.68,7.31,2.12,10.46,4.04,3.19,1.9,6.01,4.18,8.73,6.53,2.72,2.35,5.21,4.92,7.51,7.61,9.21,10.72,15,23.73,16.51,36.66,.76,6.45,.77,12.7,1.02,18.74,.2,6.05,.39,11.93,.57,17.61,.16,5.69,.05,11.38-1.6,16.62-1.62,5.18-4.8,9.86-9.31,12.38-2.24,1.26-4.54,1.89-6.43,2.95-1.92,.99-3.24,2.64-4.61,4.36-1.33,1.71-2.95,3.43-4.99,4.35-1.99,.98-4.18,1.16-6.17,1.03-4.03-.33-7.43-1.96-10.25-3.75-2.8-1.85-5.07-3.88-6.98-5.84-3.79-3.96-5.97-7.65-7.25-10.2-.64-1.28-1.06-2.29-1.32-2.97-.25-.69-.36-1.05-.32-1.06Z" fill="#d8c722"/>
+      <path d="M319.5,278.08c.24,.01-.22,1.37,.96,3.13,1.13,1.71,4.08,3.56,7.76,2.35,1.81-.51,3.67-1.56,5.62-2.84,1.97-1.29,4.05-2.71,6.12-4.31,4.09-3.2,8.4-7.27,10.52-12.72,2.17-5.41,1.23-11.34,.67-16.56-.3-2.55-1.04-4.79-2.74-5.76-1.7-1.01-3.91-.96-5.7-.57-3.69,.88-6.04,3.3-7.24,5.05-1.23,1.8-1.52,3.05-1.73,2.99-.12-.01-.17-1.37,.89-3.49,1.04-2.05,3.4-4.98,7.63-6.26,2.07-.55,4.64-.84,7.17,.48,1.25,.67,2.27,1.86,2.87,3.17,.61,1.31,.9,2.69,1.12,4.06,.37,2.69,.77,5.47,.85,8.49,.1,2.99-.26,6.25-1.47,9.3-2.42,6.17-7.15,10.43-11.46,13.65-2.19,1.62-4.36,2.99-6.41,4.24-2.06,1.24-4.15,2.31-6.28,2.79-2.09,.5-4.27,.34-5.84-.51-1.57-.8-2.63-1.96-3.19-3.05-.56-1.11-.61-2.11-.5-2.73,.11-.63,.31-.91,.37-.89Z" fill="#d8c722"/>
+      <path d="M342.79,255.78c.24-.12,1.42,2.01,.91,5.72-.27,1.82-.99,3.95-2.4,5.98-1.4,2.01-3.5,3.93-6.22,5.02-.7,.24-1.34,.49-2.09,.62-.74,.14-1.66,.19-2.56-.19-.9-.37-1.56-1.14-1.88-1.89-.33-.76-.42-1.53-.38-2.25,.08-1.5,.87-2.7,1.55-3.52,.72-.86,1.44-1.49,2.03-2.07,1.19-1.12,1.86-2.19,2.13-3.01,.28-.82,.22-1.36,.4-1.41,.13-.06,.56,.45,.55,1.56,0,1.1-.62,2.63-1.78,4.04-1.06,1.36-2.63,2.89-2.61,4.51-.02,.85,.38,1.65,.89,1.79,.48,.26,1.72-.09,2.81-.49,4.48-1.79,6.99-6,7.81-9.05,.88-3.14,.42-5.27,.82-5.36Z" fill="#d8c722"/>
+      <path d="M288.88,211.74c-.14,.16-.82-.83-2.45-.54-.75,.12-1.75,.63-2.07,1.51-.3,.87,.08,2.08,1.26,2.84,1.16,.82,2.75,1.34,4.58,1.74,1.87,.44,3.86,.94,5.94,1.5,4.17,1.13,8.71,2.52,13.41,4.16,9.41,3.28,17.64,7.03,23.44,10.02,5.79,3.01,9.18,5.22,9.02,5.51-.34,.65-14.64-6.7-33.28-13.19-4.65-1.63-9.13-3.07-13.22-4.31-2.05-.6-4-1.17-5.83-1.7-1.87-.51-3.71-1.18-5.14-2.35-1.51-1.1-2.24-3.27-1.45-4.8,.82-1.51,2.26-1.88,3.25-1.91,1.04-.04,1.81,.41,2.17,.78,.38,.38,.41,.69,.36,.72Z" fill="#d8c722"/>
+      <path d="M288.94,235.48c.16,.03,.25,.57,.17,1.54-.1,.96-.29,2.39-1.26,4.04-.5,.8-1.31,1.68-2.49,2.13-1.15,.49-2.67,.42-3.9-.17-1.25-.58-2.28-1.57-3.01-2.82-.75-1.28-1.02-2.74-1.06-4.16-.02-2.86,.71-5.21,1.14-7.37,.49-2.16,.96-4.1,1.4-5.72,.87-3.24,1.57-5.22,1.91-5.15,.34,.07,.24,2.16-.18,5.49-.21,1.67-.51,3.64-.87,5.83-.33,2.19-.94,4.6-.9,6.87,.03,1.13,.24,2.2,.7,3.02,.46,.85,1.16,1.56,1.9,1.96,1.5,.84,3.05,.2,3.94-.93,.91-1.14,1.39-2.42,1.75-3.25,.36-.85,.6-1.34,.77-1.31Z" fill="#d8c722"/>
+      <path d="M329.32,239.03c-.11,.31-2.54-.27-6.19-1.83-3.67-1.51-8.48-4.08-13.9-6.36-5.42-2.3-10.6-3.33-14.45-3.57-3.84-.28-6.27-.08-6.33-.45-.06-.31,2.32-1.14,6.36-1.31,4.01-.22,9.72,.62,15.37,3.03,5.65,2.38,10.31,5.19,13.73,7.08,3.4,1.94,5.54,3.07,5.41,3.41Z" fill="#d8c722"/>
+      <path d="M281.21,256.99c-.17,.1-.65-.38-1.37-1.32l1.03-.25c.31,1.76-1.81,4.69-5.31,4.48-1.65-.08-3.27-.8-4.7-1.74-1.42-.95-2.87-2.16-3.95-3.87-.75-1.19-1.25-2.63-1.19-4.07,.04-1.43,.57-2.74,1.23-3.73,1.35-1.99,2.9-3.19,4.03-4.29,2.37-2.09,3.05-3.84,3.41-3.78,.14,.03,.22,.59-.08,1.52-.28,.93-.99,2.17-2.04,3.45-1.02,1.29-2.42,2.67-3.36,4.29-.96,1.61-1.06,3.51,.11,5.3,.8,1.28,1.98,2.35,3.19,3.22,1.2,.87,2.42,1.47,3.54,1.62,1.1,.18,2.09-.15,2.82-.66,.72-.51,1.09-1.18,1.21-1.76l.39-1.88,.63,1.63c.43,1.1,.59,1.76,.42,1.86Z" fill="#d8c722"/>
+      <path d="M302.51,350.77c-.07,.12-1.52-.5-3.58-2.42-2.01-1.9-4.66-5.31-5.72-10.36-.54-2.48-.64-5.18-1.48-7.76-.77-2.63-2.26-5.21-4.2-7.64-1.97-2.42-4.43-4.66-7.17-6.75-2.75-2.14-5.78-3.92-8.98-6.14-3.13-2.18-6.1-5.71-5.97-9.97,.04-2.17,1.23-3.96,1.92-5.31,.77-1.41,.87-2.55,.54-4.04-.31-1.43-.93-2.89-1.37-4.45-.22-.79-.39-1.63-.4-2.53-.03-.9,.27-1.88,.78-2.64,1.1-1.58,2.57-2.07,3.44-2.82,.91-.73,.97-1.24,.4-2.04-.59-.75-1.83-1.68-2.18-3.05-.38-1.31-.14-2.52,.19-3.51,.71-2.02,1.91-3.31,2.66-4.41,1.64-2.15,1.78-3.66,1.97-3.65,.17-.04,.32,1.73-1.15,4.17-.67,1.23-1.68,2.57-2.14,4.3-.23,.85-.31,1.8-.02,2.62,.25,.83,1.05,1.34,2.04,2.42,.47,.52,.95,1.45,.81,2.4-.12,1-.78,1.74-1.35,2.22-1.15,.97-2.43,1.58-2.93,2.46-.57,.84-.44,2.07-.02,3.44,.42,1.38,1.09,2.83,1.5,4.56,.19,.87,.36,1.81,.23,2.83-.09,1.03-.48,1.96-.87,2.77-.83,1.64-1.61,2.9-1.61,4.34-.04,1.44,.49,2.99,1.39,4.33,.88,1.34,2.18,2.5,3.61,3.55,6.08,3.99,12.38,8.12,16.47,13.48,2.05,2.65,3.62,5.55,4.39,8.49,.84,2.95,.82,5.69,1.22,8.01,.75,4.66,2.98,8,4.69,10.02,1.75,2.03,3,2.92,2.88,3.09Z" fill="#d8c722"/>
+      <path d="M348.4,316.74c-.71-.19,1.56-7.93-.34-17.38-1.74-9.44-6.11-16.2-5.45-16.61,.26-.18,1.69,1.29,3.39,4.11,1.69,2.81,3.57,7.05,4.5,12.04,.93,4.99,.66,9.66-.08,12.88-.73,3.24-1.74,5.05-2.02,4.95Z" fill="#d8c722"/>
+      <path d="M357.87,324.25c.17-.36,3.3,1.16,8.77,.68,2.72-.14,5.99-.68,9.81-.72,1.89-.01,4,.19,5.99,.7,1.99,.47,3.94,1.06,5.84,1.16,1.88,.09,3.76-.36,4.93-1.4,1.18-.98,1.59-2.68,1.8-4.44,.46-3.5,.22-6.76-.08-9.48-.69-5.45-1.36-8.88-.98-8.96,.29-.06,1.56,3.15,2.72,8.69,.54,2.77,.99,6.18,.62,10.01-.17,1.82-.53,4.27-2.46,6-1.86,1.66-4.34,2.16-6.67,2.06-2.36-.14-4.4-.8-6.3-1.28-1.89-.51-3.65-.71-5.44-.77-3.56-.09-6.89,.27-9.74,.19-2.85-.02-5.19-.51-6.69-1.11-1.51-.58-2.19-1.21-2.12-1.32Z" fill="#d8c722"/>
+      <path d="M327.88,290.85c.27,.12-.47,2.68-2.7,6.34-2.21,3.65-6.11,8.26-11.49,12.04-5.39,3.76-11.07,5.84-15.25,6.67-4.2,.84-6.86,.65-6.88,.36-.04-.39,2.52-.83,6.43-2.06,3.92-1.22,9.15-3.44,14.27-7,5.1-3.58,8.98-7.75,11.47-11.01,2.5-3.26,3.79-5.51,4.14-5.34Z" fill="#d8c722"/>
+      <path d="M390.46,343.28c.08-.15,1.82,.59,4.89,2.07,.77,.37,1.62,.79,2.55,1.24,.85,.5,2.13,.78,2.97,2.27,.37,.75,.3,1.83-.4,2.54-.67,.66-1.48,.88-2.24,1.01-.78,.12-1.56,.09-2.36-.03-.72-.16-1.46-.33-2.22-.5-5.93-1.42-12.97-3.11-20.79-4.98-3.91-.97-8.01-1.98-12.26-3.03-4.25-1.08-8.76-2.35-13.02-4.55-4.21-2.14-8.01-4.56-12.03-5.48-3.99-.96-8.07-.23-11.63,1.24-7.2,3.03-12.5,8.13-17.4,11.78-4.86,3.74-9.37,6.16-12.75,7.05-3.36,.95-5.32,.73-5.31,.62-.03-.23,1.88-.34,5.01-1.54,3.15-1.13,7.32-3.66,11.97-7.51,4.68-3.74,9.91-9.11,17.6-12.52,3.8-1.65,8.45-2.57,13.05-1.5,4.59,1.04,8.56,3.59,12.61,5.63,4.02,2.07,8.3,3.3,12.51,4.41,4.24,1.1,8.32,2.16,12.22,3.17,7.77,2.07,14.77,3.93,20.66,5.5,1.52,.42,2.75,.84,3.95,.67,.58-.06,1.12-.23,1.39-.48,.24-.21,.31-.59,.18-.93-.3-.73-1.38-1.27-2.26-1.79-.89-.52-1.71-1-2.44-1.43-2.93-1.74-4.51-2.77-4.43-2.93Z" fill="#d8c722"/>
+      <path d="M391.31,344.7c-.13,.29-1.44,.09-3.26-.97-1.81-1.05-4.02-3.09-5.58-5.94-1.54-2.85-2.05-5.82-1.94-7.91,.1-2.11,.65-3.31,.96-3.26,.72,.08,.37,4.98,3.17,9.98,2.67,5.08,6.97,7.45,6.65,8.1Z" fill="#d8c722"/>
+      <path d="M259.89,493.24c-.26,.04,.06-2.39-1.79-5.95-.93-1.73-2.49-3.7-4.88-5.08-1.2-.69-2.63-1.2-4.19-1.81-1.54-.61-3.29-1.32-4.8-2.69-1.53-1.35-2.57-3.27-3.16-5.31-.6-2.06-.77-4.25-.76-6.46,.12-4.41,.68-9.05,1.67-13.86,1.94-9.63,5.62-19.74,8.71-30.42,3.26-10.62,4.29-21.26,6.95-30.76,1.29-4.74,3.04-9.16,5.21-13,2.15-3.85,4.7-7.1,7.24-9.82,5.14-5.44,10.35-8.67,14.07-10.46,3.74-1.81,5.98-2.35,6.02-2.22,.08,.2-2.04,1.05-5.56,3.08-3.51,2.02-8.42,5.39-13.22,10.8-4.84,5.36-9.25,12.91-11.54,22.23-2.47,9.23-3.46,20.01-6.77,30.85-3.14,10.82-6.85,20.81-8.86,30.21-1.03,4.68-1.65,9.22-1.85,13.43-.16,4.14,.6,8.15,3.05,10.45,2.43,2.29,5.94,2.91,8.5,4.59,2.61,1.67,4.18,3.91,5.04,5.84,.87,1.95,1.09,3.61,1.12,4.7,.02,1.11-.13,1.67-.19,1.67Z" fill="#d8c722"/>
+      <path d="M230.99,652.03c-.14,.03-.93-2.39-1.74-6.93-.83-4.53-1.5-11.19-1.57-19.42-.09-8.24,.39-17.99,.85-28.81,.5-10.83,1.18-22.75,2.67-35.22,.75-6.23,1.67-12.3,2.78-18.12,1.12-5.82,2.4-11.34,3.16-16.64,.79-5.29,.96-10.39,1.04-15.19,.06-4.81,.11-9.3,.16-13.39,.11-8.19,.24-14.82,.39-19.4,.15-4.58,.31-7.12,.48-7.12,.17,0,.34,2.53,.49,7.12,.15,4.58,.29,11.21,.4,19.4,.04,4.1,.09,8.59,.15,13.41,0,4.83-.08,10.04-.83,15.49-.72,5.44-1.96,11.02-3.04,16.78-1.07,5.76-1.96,11.78-2.7,17.96-1.48,12.37-2.22,24.24-2.85,35.04-.58,10.81-1.24,20.55-1.38,28.7-.15,8.16,.24,14.75,.77,19.28,.51,4.53,.98,7.03,.79,7.07Z" fill="#d8c722"/>
+      <path d="M335.12,376.07c.07-.06,.59,.47,1.54,1.52,.98,1.03,2.29,2.66,3.88,4.83,3.17,4.35,7.19,11.16,10.29,20.35,3,9.17,5,20.82,3.57,33.64-.67,6.41-2.38,12.97-4.48,19.55-2.05,6.6-4.4,13.32-5.79,20.38-.72,3.53-1,7.02-1.36,10.63-.4,3.56-1.03,7.28-2.86,10.54-1.74,3.2-4.7,6.03-8.42,6.8-3.7,.7-6.94-.12-10.09-.51-12.66-2.06-23.5-6.07-32.43-9.53-8.93-3.54-16.03-6.63-20.96-8.74-4.92-2.14-7.6-3.39-7.54-3.55,.06-.16,2.87,.79,7.9,2.65,5.03,1.9,12.27,4.63,21.22,8,8.97,3.24,19.76,7.02,32.16,8.91,3.09,.38,6.37,1.07,9.24,.45,2.86-.61,5.27-2.86,6.79-5.66,3.15-5.67,2.3-13.17,3.92-20.47,1.44-7.3,3.84-14.09,5.91-20.63,2.12-6.54,3.82-12.89,4.53-19.09,1.51-12.42-.24-23.8-2.97-32.84-2.83-9.06-6.54-15.88-9.42-20.35-1.46-2.23-2.62-3.94-3.47-5.06-.82-1.15-1.22-1.78-1.15-1.83Z" fill="#d8c722"/>
+      <path d="M203.01,739.6c-.08-.03,.11-.88,.54-2.49,.46-1.61,1.14-3.96,2.01-6.98,1.8-6.04,4.47-14.77,7.83-25.53,6.72-21.52,16.16-51.2,26.74-83.93,5.2-16.39,10.66-31.87,14.33-46.23,3.71-14.36,5.21-27.68,6.03-38.89,.81-11.21,1.02-20.33,1.26-26.63,.13-3.14,.23-5.58,.3-7.25,.09-1.66,.18-2.53,.27-2.53s.16,.87,.23,2.53c.07,1.66,.13,4.11,.17,7.26,.06,6.31,.12,15.44-.47,26.73-.6,11.27-1.93,24.77-5.56,39.33-3.6,14.56-8.99,30.05-14.19,46.44-10.58,32.73-20.28,62.33-27.43,83.71-3.57,10.69-6.5,19.33-8.58,25.28-1.06,2.96-1.89,5.26-2.45,6.84-.59,1.55-.93,2.36-1.02,2.33Z" fill="#d8c722"/>
+      <path d="M403.98,350.64c.41,.64,.73,1.57,.98,2.69,.23,1.14,.59,2.54,1.24,3.96,1.26,2.9,3.64,5.94,6.37,9.29,1.34,1.7,2.65,3.6,4.11,5.56,1.3,2.07,2.76,4.21,4.06,6.59,2.7,4.71,5.09,10.17,7.24,16.17,1.54,4.38,2.74,9.19,3.8,14.16l1.81-2.18c-1.04-4.43-2.21-8.73-3.66-12.68-2.28-6.09-4.81-11.62-7.66-16.36-1.37-2.4-2.91-4.55-4.29-6.62-1.54-1.96-2.92-3.86-4.33-5.53-2.85-3.3-5.24-6.13-6.57-8.83-.69-1.34-1.09-2.57-1.4-3.73-.35-1.15-.75-2.12-1.29-2.79-.51-.69-1.2-1.01-1.65-.99-.45,0-.64,.16-.64,.17-.04,.14,1.05-.28,1.88,1.1Z" fill="#d8c722"/>
+    </g>
+  </g>
+</svg></div>
+    <span>© 2026 Manoj Mathangadeera</span>
+    <span>codemmhub.github.io</span>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{
+      mx=e.clientX;my=e.clientY;
+      cursor.style.transform=`translate(${mx-4}px,${my-4}px)`;
+    });
+    function animateRing(){
+      rx+=(mx-rx-18)*0.12; ry+=(my-ry-18)*0.12;
+      ring.style.transform=`translate(${rx}px,${ry}px)`;
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+    document.querySelectorAll('a,button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ring.style.width='60px';ring.style.height='60px';});
+      el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';});
+    });
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+    },{threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>
