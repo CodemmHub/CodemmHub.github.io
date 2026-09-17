@@ -423,8 +423,14 @@ footer .wrap {
 }
 footer .logo img { height: 22px; opacity: 0.6; }
 
-/* Scroll-reveal base state. JS adds .in-view; if JS fails to
-   load for any reason, this fallback shows everything so the
-   page is never stuck invisible. */
-.reveal { opacity: 0; transform: translateY(24px); }
+/* Scroll-reveal base state. JS adds .in-view via IntersectionObserver;
+   the fade/rise is this CSS transition, not a JS tween, so it can't get
+   stuck mid-animation — it's just a class flip the browser animates on
+   its own. If JS fails to load for any reason, .no-js keeps everything
+   visible so the page is never stuck invisible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 .no-js .reveal, .reveal.in-view { opacity: 1; transform: none; }
