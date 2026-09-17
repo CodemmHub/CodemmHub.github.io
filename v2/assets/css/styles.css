@@ -335,15 +335,19 @@ h1.hero-headline .word-inner { display: inline-block; }
 /* ============================================
    CONTACT / FOOTER
    ============================================ */
-#contact { position: relative; overflow: hidden; }
+#contact { position: relative; overflow: hidden; padding-bottom: 4rem; }
 #contact .stag {
   position: absolute;
-  right: -8%;
-  bottom: -6%;
-  width: 78%;
-  max-width: 460px;
+  right: -4%;
+  bottom: 0;
+  width: 42%;
+  max-width: 220px;
   opacity: 0.9;
   pointer-events: none;
+}
+@media (min-width: 860px) {
+  #contact { padding-bottom: 7rem; }
+  #contact .stag { width: 40%; max-width: 640px; right: 0; bottom: 0; }
 }
 #contact .contact-inner { position: relative; z-index: 1; }
 #contact h2 { font-size: clamp(1.75rem, 6vw, 2.75rem); max-width: 13ch; line-height: 1.15; }
