@@ -247,25 +247,6 @@ h1.hero-headline .word-inner { display: inline-block; }
 .section-head .tag { font-family: var(--font-sans); color: var(--ink-muted); font-size: 0.8125rem; }
 
 /* ============================================
-   NOW
-   ============================================ */
-#now .now-panel {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.75rem var(--pad);
-  background: var(--bg-panel);
-  position: relative;
-  overflow: hidden;
-}
-#now p { max-width: 56ch; color: var(--ink-soft); font-size: 1.0625rem; position: relative; z-index: 1; }
-#now .now-branch {
-  position: absolute;
-  top: -10px; right: -6px;
-  width: 60px;
-  opacity: 0.5;
-}
-
-/* ============================================
    ABOUT
    ============================================ */
 #about { position: relative; overflow: hidden; }
