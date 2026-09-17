@@ -5,7 +5,7 @@
   var hasAnime = typeof anime !== 'undefined';
 
   /* ---------------------------------------------
-     SCROLL REVEALS — native IntersectionObserver decides
+     SCROLL REVEALS, native IntersectionObserver decides
      visibility; the fade/rise itself is a plain CSS
      transition (see .reveal in styles.css). Same fix as
      the root build: a JS tween driven through anime's
@@ -71,17 +71,17 @@
   var stagger = anime.stagger;
 
   /* ---------------------------------------------
-     HERO ENTRANCE — direct animate() calls, run on
+     HERO ENTRANCE, direct animate() calls, run on
      load rather than through onScroll/autoplay, which
      is the pattern that tested reliably.
      --------------------------------------------- */
   var headline = document.getElementById('hero-headline');
   if (headline) {
     // textContent flattens the markup, so the highlight-mark span around
-    // "brands" in the HTML gets lost here — re-applied by word match below,
+    // "brands" in the HTML gets lost here, re-applied by word match below,
     // after the split, instead of trying to preserve it through the rebuild.
     var words = headline.textContent.trim().split(' ');
-    // Space sits between the word-clip spans (join(' ')), not inside one —
+    // Space sits between the word-clip spans (join(' ')), not inside one,
     // a trailing space inside an inline-block gets trimmed as edge whitespace.
     headline.innerHTML = words.map(function (w) {
       return '<span class="word-clip"><span class="word-inner">' + w + '</span></span>';
@@ -107,7 +107,7 @@
   animate('.hero-figure', { opacity: [ 0, 1 ], y: [ 16, 0 ], duration: 800, delay: 300, ease: 'outQuad' });
 
   /* ---------------------------------------------
-     NAV — background/blur fades in on scroll.
+     NAV, background/blur fades in on scroll.
      --------------------------------------------- */
   var header = document.querySelector('header');
   window.addEventListener('scroll', function () {
@@ -115,7 +115,7 @@
   }, { passive: true });
 
   /* ---------------------------------------------
-     WORK FILTER — All / Dev / Brand.
+     WORK FILTER, All / Dev / Brand.
      --------------------------------------------- */
   var tabs = document.querySelectorAll('.filter-tab');
   var cards = document.querySelectorAll('.work-card');

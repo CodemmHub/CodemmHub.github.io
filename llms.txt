@@ -6,7 +6,7 @@ Manoj works across three disciplines, chosen per project rather than by default:
 
 ## About
 
-Nature taught him to see structure and shape first — code just gave him a faster way to build with it. Started in design, not code — years of building brand identities and visual systems for clients before moving into full-stack development. Now builds the sites and systems that carry those identities too, from the ground up. Freelancing gives him the freedom to keep choosing different problems instead of settling into one — brand strategy, full-stack builds, digital campaigns, plus consulting on AI-era digital presence for brands still running on old playbooks. That same pull toward new problems is why he's finishing a BSc in Computer Science, with AI research next.
+Nature taught him to see structure and shape first. Code just gave him a faster way to build with it. Started in design, not code. Years of building brand identities and visual systems for clients before moving into full-stack development. Now builds the sites and systems that carry those identities too, from the ground up. Freelancing gives him the freedom to keep choosing different problems instead of settling into one: brand strategy, full-stack builds, digital campaigns, plus consulting on AI-era digital presence for brands still running on old playbooks. That same pull toward new problems is why he's finishing a BSc in Computer Science, with AI research next.
 
 ## Services
 
@@ -16,18 +16,18 @@ Nature taught him to see structure and shape first — code just gave him a fast
 
 ## Selected web development work
 
-- Adeon.ae — https://adeon.ae — corporate website, 2025
-- Adeon Digital — https://adeon.digital — digital agency website, 2025
-- Reko Global — https://rekoglobal.com/en/ — corporate brand + website, 2025
-- U-SRI Engineers — https://www.usriengineers.lk/ — engineering firm website, 2024
-- Ceylon Vanilla — https://ceylonvanilla.lk/ — e-commerce brand + website, 2024
-- Fintree — https://fintree.ae/en/ — finance website, 2024
-- Manikshan International — https://manikshan.com/ — corporate website, 2026
-- JJ Prime Properties — https://jjprimeproperties.co.uk/ — UK real estate developer website, 2026
+- Adeon.ae · https://adeon.ae · corporate website, 2025
+- Adeon Digital · https://adeon.digital · digital agency website, 2025
+- Reko Global · https://rekoglobal.com/en/ · corporate brand + website, 2025
+- U-SRI Engineers · https://www.usriengineers.lk/ · engineering firm website, 2024
+- Ceylon Vanilla · https://ceylonvanilla.lk/ · e-commerce brand + website, 2024
+- Fintree · https://fintree.ae/en/ · finance website, 2024
+- Manikshan International · https://manikshan.com/ · corporate website, 2026
+- JJ Prime Properties · https://jjprimeproperties.co.uk/ · UK real estate developer website, 2026
 
 ## Selected brand/design work
 
-Company Profile, Jambu Brand Guide, REKO Web, JETEX Outdoor, AutoFleet, Outdoor Media, Meraki Brand, Beyond the Prompt — full case studies at https://dribbble.com/aurtik
+Company Profile, Jambu Brand Guide, REKO Web, JETEX Outdoor, AutoFleet, Outdoor Media, Meraki Brand, Beyond the Prompt. Full case studies at https://dribbble.com/aurtik
 
 ## Links
 
