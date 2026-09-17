@@ -1,0 +1,430 @@
+/* ============================================
+   TOKENS
+   Dark-first palette: near-black ground, amber
+   gold accent, warm linen for text. Same 3-anchor
+   structure as the Aivotandra brand system, but a
+   distinct hue set, so the two sites read as related
+   craft without being the same skin.
+   ============================================ */
+:root {
+  --bg: #141210;           /* graphite black — page ground */
+  --bg-panel: #1C1916;     /* slightly raised panel (cards, nav-on-scroll) */
+  --bg-panel-2: #221E19;   /* one step up again, for active/hover states */
+  --border: #2C2620;       /* hairline */
+  --border-strong: #3D362C;
+
+  --text-primary: #F2EFE7;   /* warm linen light */
+  --text-secondary: #ABA298; /* muted warm gray, body copy on dark */
+  --text-muted: #706A5F;     /* captions, meta, disabled */
+
+  --accent: #D9A441;         /* amber gold */
+  --accent-hover: #E8BA61;
+  --accent-dim: #8A6423;     /* for text on light-amber fills */
+
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', 'Cascadia Code', Consolas, monospace;
+
+  --max-w: 1120px;
+  --pad: clamp(1.25rem, 4vw, 3rem);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Respect reduced-motion: anime.js calls are gated in JS too,
+   but this covers any CSS transitions directly. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+a { color: inherit; text-decoration: none; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+.wrap {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+section { padding: clamp(4rem, 10vw, 8rem) 0; scroll-margin-top: 90px; }
+
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.01em; }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   NAV
+   Fixed, transparent at top, gains a panel bg once
+   you scroll (toggled in JS). Index-style numbers
+   on the links are mono because this is genuinely
+   a developer's nav, not decoration for its own sake.
+   ============================================ */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+header.scrolled {
+  background: rgba(20, 18, 16, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom-color: var(--border);
+}
+header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+.logo {
+  display: inline-flex;
+  align-items: center;
+}
+.logo img {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+nav a {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  position: relative;
+  padding-bottom: 2px;
+}
+nav a:hover { color: var(--text-primary); }
+nav a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: right 0.25s ease;
+}
+nav a:hover::after { right: 0; }
+.nav-links-mobile { display: none; }
+
+@media (max-width: 720px) {
+  nav ul { display: none; }
+}
+
+/* ============================================
+   HERO
+   Left-aligned, asymmetric — deliberately not the
+   centered hero-card-with-gradient default. Headline
+   is the one place type gets to be the whole show.
+   ============================================ */
+#hero {
+  padding-top: clamp(8rem, 20vw, 12rem);
+  padding-bottom: clamp(4rem, 8vw, 6rem);
+}
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+.status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+h1.hero-headline {
+  font-size: clamp(2.25rem, 6vw, 4.25rem);
+  line-height: 1.08;
+  max-width: 15ch;
+}
+/* Manual word-split wrapper: outer span clips, inner span is what
+   actually translates. Two layers because a single element can't
+   both hide overflow and be the thing animating past its own edge. */
+h1.hero-headline .word-clip { display: inline-block; overflow: hidden; }
+h1.hero-headline .word-inner { display: inline-block; }
+.hero-sub {
+  margin-top: 1.75rem;
+  max-width: 46ch;
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+}
+.hero-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--accent);
+  color: #1A1408;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  padding: 0.85rem 1.5rem;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+.hero-stats {
+  margin-top: 4.5rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+}
+.stat .num {
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  color: var(--text-primary);
+}
+.stat .label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* ============================================
+   SECTION HEADERS — shared across Now/About/Services/Work
+   ============================================ */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+.section-head h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.section-head .tag { font-family: var(--font-mono); color: var(--text-muted); }
+
+/* ============================================
+   NOW
+   ============================================ */
+#now { padding-top: 0; }
+#now .wrap {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem var(--pad);
+  background: var(--bg-panel);
+}
+#now p { max-width: 60ch; color: var(--text-secondary); font-size: 1.0625rem; }
+
+/* ============================================
+   ABOUT
+   ============================================ */
+#about .about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+#about p {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  max-width: 52ch;
+}
+#about p + p { margin-top: 1.25rem; }
+@media (max-width: 800px) {
+  #about .about-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
+   SERVICES
+   Categorical mono tags (BRAND / DEV / STRATEGY)
+   instead of 01/02/03 — services aren't a sequence,
+   so numbering them would be decoration pretending
+   to be information.
+   ============================================ */
+.service-list { display: flex; flex-direction: column; }
+.service-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  align-items: start;
+}
+.service-row:last-child { border-bottom: 1px solid var(--border); }
+.service-row .tag {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--accent);
+  padding-top: 0.3rem;
+}
+.service-row h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.service-row p { color: var(--text-secondary); max-width: 55ch; }
+@media (max-width: 600px) {
+  .service-row { grid-template-columns: 1fr; gap: 0.5rem; }
+}
+
+/* ============================================
+   WORK — filterable grid
+   ============================================ */
+.filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+.filter-tab {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  cursor: pointer;
+  background: transparent;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.filter-tab:hover { color: var(--text-primary); border-color: var(--border-strong); }
+.filter-tab.active {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+@media (max-width: 720px) {
+  .work-grid { grid-template-columns: 1fr; }
+}
+
+.work-card {
+  background: var(--bg);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s ease;
+}
+.work-card:hover { background: var(--bg-panel); }
+.work-card.hidden { display: none; }
+
+.work-card .thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+  background: var(--bg-panel-2);
+}
+.work-card .thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.work-card:hover .thumb img { transform: scale(1.03); }
+
+.work-card .thumb.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.work-card .thumb.placeholder span {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.work-card .title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.work-card h3 { font-size: 1.0625rem; font-weight: 500; }
+.work-card .arrow {
+  font-size: 1rem;
+  color: var(--text-muted);
+  transform: translate(0, 0);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.work-card:hover .arrow { transform: translate(3px, -3px); color: var(--accent); }
+.work-card .meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* ============================================
+   CONTACT / FOOTER
+   ============================================ */
+#contact { text-align: left; }
+#contact h2 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  max-width: 14ch;
+  line-height: 1.1;
+}
+#contact h2 .accent-word { color: var(--accent); }
+.contact-links {
+  margin-top: 3rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.contact-links a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 1.0625rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
+.contact-links a .mono { font-size: 0.75rem; }
+.contact-links a:hover { border-color: var(--accent); }
+.contact-links a:hover .mono { color: var(--accent); }
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 2rem 0;
+}
+footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+footer .logo img { height: 22px; opacity: 0.6; }
+
+/* Scroll-reveal base state. JS adds .in-view; if JS fails to
+   load for any reason, this fallback shows everything so the
+   page is never stuck invisible. */
+.reveal { opacity: 0; transform: translateY(24px); }
+.no-js .reveal, .reveal.in-view { opacity: 1; transform: none; }
